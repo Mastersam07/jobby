@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:jobby/Screens/Signup_Screen.dart';
 import 'package:jobby/Widgets/Custom_Textfield.dart';
 import 'package:jobby/Widgets/Main_Button.dart';
 
@@ -29,17 +31,17 @@ class _SigninScreenState extends State<SigninScreen> {
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_rounded,
-              color: darkGrey,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
+        // appBar: AppBar(
+        //   leading: IconButton(
+        //     icon: Icon(
+        //       Icons.arrow_back_ios,
+        //       color: darkGrey,
+        //     ),
+        //     onPressed: () => Navigator.pop(context),
+        //   ),
+        //   backgroundColor: Colors.transparent,
+        //   elevation: 0,
+        // ),
         body: Container(
           color: lightBlue,
           child: ListView(
@@ -77,7 +79,7 @@ class _SigninScreenState extends State<SigninScreen> {
                             keyboardType: TextInputType.emailAddress,
                             labelText: 'Email',
                             prefixIcon: Icon(
-                              Icons.email_outlined,
+                              Icons.email,
                               color: darkGrey,
                             ),
                           ),
@@ -133,28 +135,32 @@ class _SigninScreenState extends State<SigninScreen> {
                     padding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 30),
                     width: MediaQuery.of(context).size.width,
-                    child: FlatButton(
-                      onPressed: () {},
-                      padding: EdgeInsets.all(15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Login with',
+                    child: Column(
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            text: 'Create a new account  ',
                             style: TextStyle(
-                              fontSize: 16.0,
                               color: darkGrey,
+                              fontFamily: 'Montserrat',
                             ),
+                            children: [
+                              TextSpan(
+                                text: 'SignUp',
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.pushNamed(
+                                        context, SignupScreen.route);
+                                  },
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Image.asset(
-                            'assets/images/search.png',
-                            width: 25,
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -162,6 +168,31 @@ class _SigninScreenState extends State<SigninScreen> {
               SizedBox(
                 height: size.height * 0.1,
               ),
+              // Column(
+              //   children: [
+              //     RichText(
+              //       text: TextSpan(
+              //         text: 'Already have an account?  ',
+              //         style: TextStyle(
+              //           color: darkGrey,
+              //           fontFamily: 'Montserrat',
+              //         ),
+              //         children: [
+              //           TextSpan(
+              //             text: 'SignIn',
+              //             style: TextStyle(fontWeight: FontWeight.w600),
+              //             recognizer: TapGestureRecognizer()..onTap = () {
+              //               Navigator.pushNamed(context, SignupScreen.route);
+              //             },
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //     SizedBox(
+              //       height: 20,
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
