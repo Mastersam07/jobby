@@ -16,14 +16,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: SignupScreen.route,
+      initialRoute: SigninScreen.route,
       theme: ThemeData(fontFamily: 'Montserrat'),
       routes: {
-        SignupScreen.route : (context) => SignupScreen(),
-        SigninScreen.route : (context) => SigninScreen(),
+        SignupScreen.route: (context) => SignupScreen(),
+        SigninScreen.route: (context) => SigninScreen(),
       },
     );
   }
 }
-
-
