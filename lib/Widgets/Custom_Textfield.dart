@@ -4,6 +4,7 @@ import 'package:jobby/constants.dart';
 
 class CustomTextField extends StatelessWidget {
   CustomTextField({
+    this.validator,
     this.controller,
     this.labelText,
     this.prefixIcon,
@@ -19,6 +20,7 @@ class CustomTextField extends StatelessWidget {
 
   final TextEditingController controller;
   final String labelText;
+  final Function validator;
   final Icon prefixIcon;
   final Widget suffixIcon;
   final TextInputType keyboardType;
@@ -31,7 +33,8 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: validator,
       controller: controller,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,

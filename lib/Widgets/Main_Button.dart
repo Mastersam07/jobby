@@ -8,7 +8,7 @@ class MainActionButton extends StatelessWidget {
   });
 
   final VoidCallback onPressed;
-  final String label;
+  final Widget label;
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +23,7 @@ class MainActionButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.0),
         ),
         color: darkGrey,
-        child: Text(
-          label,
-          style: TextStyle(
-            color: Colors.white,
-            letterSpacing: 1.3,
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        child: label,
       ),
     );
   }
