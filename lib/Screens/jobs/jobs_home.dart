@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jobby/Screens/jobs/all_jobs.dart';
 import 'package:jobby/Widgets/company_card.dart';
 import 'package:jobby/Widgets/recent_job_card.dart';
+import 'package:jobby/models/job.dart';
 import 'package:jobby/providers/jobs.dart';
 import 'package:provider/provider.dart';
 
@@ -111,30 +112,37 @@ class JobsHome extends StatelessWidget {
               Container(
                 width: double.infinity,
                 height: 190.0,
-                child: ListView.builder(
-                  reverse: true,
-                  itemCount: 5,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    var company = allJobs[index];
-                    return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => JobDetail(
-                                company: company,
-                              ),
-                            ),
-                          );
-                        },
-                        child: CompanyCard(company: company)
-                        // : CompanyCard2(company: company),
+                child: Selector<JobProvider, List<Job>>(
+                    selector: (context, jobProvider) {
+                  return jobProvider.allJobs;
+                }, builder: (context, allJobsFromProvider, _) {
+                  return allJobsFromProvider.isEmpty
+                      ? Center(child: CircularProgressIndicator())
+                      : ListView.builder(
+                          reverse: true,
+                          itemCount: 5,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            var company = allJobs[index];
+                            return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => JobDetail(
+                                        company: company,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: CompanyCard(company: company)
+                                // : CompanyCard2(company: company),
+                                );
+                          },
                         );
-                  },
-                ),
+                }),
               ),
               SizedBox(height: 35.0),
               Row(
@@ -165,28 +173,35 @@ class JobsHome extends StatelessWidget {
                   ),
                 ],
               ),
-              ListView.builder(
-                itemCount: 10,
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                itemBuilder: (context, index) {
-                  var recent = allJobs[index];
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => JobDetail(
-                            company: recent,
-                          ),
-                        ),
+              Selector<JobProvider, List<Job>>(
+                  selector: (context, jobProvider) {
+                return jobProvider.allJobs;
+              }, builder: (context, allJobsFromProvider, _) {
+                return allJobsFromProvider.isEmpty
+                    ? Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        itemCount: allJobsFromProvider.length.clamp(0.0, 10.0),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          var recent = allJobs[index];
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => JobDetail(
+                                    company: recent,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: RecentJobCard(company: recent),
+                          );
+                        },
                       );
-                    },
-                    child: RecentJobCard(company: recent),
-                  );
-                },
-              ),
+              }),
             ],
           ),
         ),
