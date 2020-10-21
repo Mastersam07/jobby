@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'dart:io';
+// import 'dart:io';
 import 'dart:convert';
 
 import 'package:jobby/models/job.dart';
@@ -41,10 +41,9 @@ class ApiService {
   Future<AllJobResponse> getAllJobs() async {
     final url = "$api/jobs/";
 
-    final response = await http.get(
-      url,
-      headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
-    );
+    final response = await http.get(url
+        // headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+        );
 
     validateResponseStatus(response.statusCode, 200);
 
@@ -63,7 +62,7 @@ class ApiService {
 
     final response = await http.get(
       url,
-      headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+      // headers: {'Authorization': 'Bearer $token'},
     );
 
     validateResponseStatus(response.statusCode, 200);
@@ -104,8 +103,7 @@ class ApiService {
     };
 
     final response = await http.post(url,
-        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
-        body: body);
+        headers: {'Authorization': 'Bearer $token'}, body: body);
 
     validateResponseStatus(response.statusCode, 201);
 
@@ -117,14 +115,23 @@ class ApiService {
 
   /// Returns a list of saved jobs.
   Future<AllJobResponse> getAllSavedJobs() async {
+    print("geting saved jobs...");
     final url = "$api/saved-jobs";
 
-    final response = await http.get(
+    final http.Response response = await http.get(
       url,
-      headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
     );
 
-    validateResponseStatus(response.statusCode, 200);
+    print(response.statusCode);
+    print(response);
+    print("done with response!");
+
+    // validateResponseStatus(response.statusCode, 200);
 
     var apiResponse = json.decode(response.body);
     List<dynamic> data = apiResponse;
@@ -141,7 +148,7 @@ class ApiService {
 
     final response = await http.get(
       url,
-      headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+      headers: {'Authorization': 'Bearer $token'},
     );
 
     validateResponseStatus(response.statusCode, 200);

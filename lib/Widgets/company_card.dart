@@ -76,7 +76,7 @@ class CompanyCard extends StatelessWidget {
           SizedBox(height: 15.0),
           Expanded(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: company.tags
                   .map(
                     (e) => Container(

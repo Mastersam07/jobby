@@ -64,7 +64,7 @@ class _MasterState extends State<Master> {
             case "Jobs":
               currentWidgetView = JobsHome();
               break;
-            case "Applications":
+            case "Saved Jobs":
               currentWidgetView = Applications();
               break;
           }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jobby/Screens/jobs/all_jobs.dart';
 import 'package:jobby/Widgets/company_card.dart';
 import 'package:jobby/Widgets/recent_job_card.dart';
-import 'package:jobby/models/job.dart';
+import 'package:jobby/providers/jobs.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import 'jobs_detail.dart';
@@ -11,6 +13,8 @@ import 'jobs_detail.dart';
 class JobsHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final allJobs = Provider.of<JobProvider>(context).allJobs;
+    // final allSavedJobs = Provider.of<JobProvider>(context).allSavedJobs;
     return Scaffold(
       backgroundColor: kSilver,
       appBar: AppBar(
@@ -38,14 +42,16 @@ class JobsHome extends StatelessWidget {
         ],
       ),
       body: Container(
-        margin: EdgeInsets.only(left: 18.0),
+        margin: EdgeInsets.only(
+          left: 18.0,
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: 25.0),
               Text(
-                "Hi Robert,\nFind your Dream Job",
+                "Hi,\nFind your Dream Job",
                 style: kPageTitleStyle,
               ),
               SizedBox(height: 25.0),
@@ -98,7 +104,7 @@ class JobsHome extends StatelessWidget {
               ),
               SizedBox(height: 35.0),
               Text(
-                "Popular Company",
+                "Popular Jobs",
                 style: kTitleStyle,
               ),
               SizedBox(height: 15.0),
@@ -106,12 +112,13 @@ class JobsHome extends StatelessWidget {
                 width: double.infinity,
                 height: 190.0,
                 child: ListView.builder(
-                  itemCount: companyList.length,
+                  reverse: true,
+                  itemCount: 5,
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    var company = companyList[index];
+                    var company = allJobs[index];
                     return InkWell(
                         onTap: () {
                           Navigator.push(
@@ -130,17 +137,41 @@ class JobsHome extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 35.0),
-              Text(
-                "Recent Jobs",
-                style: kTitleStyle,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Recent Jobs",
+                    style: kTitleStyle,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 18.0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AllJobs(
+                              allJobs: allJobs,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Show All",
+                        style: kTitleStyle,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               ListView.builder(
-                itemCount: recentList.length,
+                itemCount: 10,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 physics: ScrollPhysics(),
                 itemBuilder: (context, index) {
-                  var recent = recentList[index];
+                  var recent = allJobs[index];
                   return InkWell(
                     onTap: () {
                       Navigator.push(

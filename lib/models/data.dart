@@ -7,7 +7,7 @@ class NavigationItem {
 List<NavigationItem> getNavigationItemList() {
   return <NavigationItem>[
     NavigationItem("Jobs"),
-    NavigationItem("Applications"),
+    NavigationItem("Saved Jobs"),
   ];
 }
 
