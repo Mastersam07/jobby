@@ -47,6 +47,7 @@ class AuthProvider with ChangeNotifier {
     );
 
     print('login');
+    print(response.statusCode);
     print(json.decode(response.body));
 
     if (response.statusCode == 200) {
