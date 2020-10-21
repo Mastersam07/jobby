@@ -12,14 +12,9 @@ class JobProvider with ChangeNotifier {
   // AuthProvier
   AuthProvider authProvider;
 
-  // Stores separate lists for open and closed todos.
+  // Stores separate lists for all and saved jobs.
   List<Job> _allJobs = List<Job>();
   List<Job> _allSavedJobs = List<Job>();
-
-  // The API is paginated. If there are more results we store
-  // the API url in order to lazily load them later.
-  // String _openTodosApiMore;
-  // String _closedTodosApiMore;
 
   // API Service
   ApiService apiService;
@@ -28,8 +23,6 @@ class JobProvider with ChangeNotifier {
   bool get initialized => _initialized;
   List<Job> get allJobs => _allJobs;
   List<Job> get allSavedJobs => _allSavedJobs;
-  // String get openTodosApiMore => _openTodosApiMore;
-  // String get closedTodosApiMore => _closedTodosApiMore;
 
   // AuthProvider is required to instaniate our ApiService.
   // This gives the service access to the user token and provider methods.
@@ -43,11 +36,11 @@ class JobProvider with ChangeNotifier {
   void init() async {
     try {
       AllJobResponse allJobsResponse = await apiService.getAllJobs();
-      AllJobResponse allSavedJobsResponse = await apiService.getAllSavedJobs();
+      // AllJobResponse allSavedJobsResponse = await apiService.getAllSavedJobs();
 
       _initialized = true;
       _allJobs = allJobsResponse.jobs;
-      _allSavedJobs = allSavedJobsResponse.jobs;
+      // _allSavedJobs = allSavedJobsResponse.jobs;
 
       notifyListeners();
     } on AuthException {
