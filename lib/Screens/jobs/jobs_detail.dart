@@ -74,8 +74,8 @@ class JobDetail extends StatelessWidget {
                     SizedBox(height: 15.0),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       for (int index = 0;
-                          company.tags.length >= 4
-                              ? index < 4
+                          company.tags.length >= 3
+                              ? index < 3
                               : index < company.tags.length;
                           index++)
                         Container(

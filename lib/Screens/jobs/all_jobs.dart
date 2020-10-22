@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jobby/models/job.dart';
 
+import 'jobs_detail.dart';
+
 class AllJobs extends StatelessWidget {
   final List<Job> allJobs;
   AllJobs({this.allJobs});
@@ -25,22 +27,33 @@ class AllJobs extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(right: 32, left: 32, bottom: 8),
-              child: Column(
-                children: buildApplications(),
+              child: ListView.builder(
+                itemCount: allJobs.length,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                itemBuilder: (context, index) {
+                  var recent = allJobs[index];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JobDetail(
+                            company: recent,
+                          ),
+                        ),
+                      );
+                    },
+                    child: buildApplication(recent),
+                  );
+                },
               ),
             ),
           ],
         ),
       ),
     );
-  }
-
-  List<Widget> buildApplications() {
-    List<Widget> list = [];
-    for (var i = 0; i < allJobs.length; i++) {
-      list.add(buildApplication(allJobs[i]));
-    }
-    return list;
   }
 
   Widget buildApplication(Job job) {
