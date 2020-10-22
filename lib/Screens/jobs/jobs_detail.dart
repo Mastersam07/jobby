@@ -32,7 +32,6 @@ class JobDetail extends StatelessWidget {
         length: 2,
         child: Container(
           width: double.infinity,
-          // margin: EdgeInsets.only(top: 50.0),
           padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 15.0),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -73,29 +72,28 @@ class JobDetail extends StatelessWidget {
                       style: kSubtitleStyle,
                     ),
                     SizedBox(height: 15.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: company.tags
-                          .map(
-                            (e) => Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 8.0,
-                                vertical: 5.0,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.0),
-                                border:
-                                    Border.all(color: kBlack.withOpacity(.5)),
-                              ),
-                              child: Text(
-                                e,
-                                style: kSubtitleStyle,
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      for (int index = 0;
+                          company.tags.length >= 3
+                              ? index < 3
+                              : index < company.tags.length;
+                          index++)
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                            vertical: 5.0,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            border: Border.all(color: kBlack.withOpacity(.5)),
+                          ),
+                          child: Text(
+                            company.tags[index],
+                            style: kSubtitleStyle,
+                          ),
+                        ),
+                    ]),
                     SizedBox(height: 25.0),
                     Material(
                       color: Colors.white,
@@ -105,7 +103,6 @@ class JobDetail extends StatelessWidget {
                           color: kBlack.withOpacity(.2),
                         ),
                       ),
-                      // borderRadius: BorderRadius.circular(12.0),
                       child: TabBar(
                         unselectedLabelColor: kBlack,
                         indicator: BoxDecoration(
@@ -138,7 +135,6 @@ class JobDetail extends StatelessWidget {
         preferredSize: Size.fromHeight(60.0),
         child: Container(
           padding: EdgeInsets.only(left: 18.0, bottom: 25.0, right: 18.0),
-          // margin: EdgeInsets.only(bottom: 25.0),
           color: Colors.white,
           child: Row(
             children: <Widget>[

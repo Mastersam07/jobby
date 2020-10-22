@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jobby/Screens/Signin_Screen.dart';
 import 'package:jobby/Screens/Signup_Screen.dart';
-// import 'package:jobby/Screens/jobs/jobs_detail.dart';
-// import 'package:jobby/Screens/jobs/jobs_home.dart';
 import 'package:jobby/Screens/master.dart';
 import 'package:jobby/providers/auth.dart';
 import 'package:jobby/providers/jobs.dart';
