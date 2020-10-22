@@ -76,28 +76,30 @@ class CompanyCard extends StatelessWidget {
           SizedBox(height: 15.0),
           Expanded(
             child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: company.tags
-                  .map(
-                    (e) => Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(right: 10.0),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        color: kBlackAccent,
-                      ),
-                      child: Text(
-                        e,
-                        style: kSubtitleStyle.copyWith(
-                          color: Colors.white,
-                          fontSize: 12.0,
-                        ),
+              children: [
+                for (int index = 0;
+                    company.tags.length >= 2
+                        ? index < 2
+                        : index < company.tags.length;
+                    index++)
+                  Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(right: 5.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      color: kBlackAccent,
+                    ),
+                    child: Text(
+                      company.tags[index],
+                      style: kSubtitleStyle.copyWith(
+                        color: Colors.white,
+                        fontSize: 12.0,
                       ),
                     ),
                   )
-                  .toList(),
+              ].toList(),
             ),
           ),
         ],

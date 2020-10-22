@@ -1,6 +1,5 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
-// import 'dart:io';
 import 'dart:convert';
 
 import 'package:jobby/models/job.dart';
@@ -51,7 +50,6 @@ class ApiService {
     List<dynamic> data = apiResponse;
 
     List<Job> jobs = jobFromJson(json.encode(data));
-    // String next = apiResponse['links']['next'];
 
     return AllJobResponse(jobs);
   }
@@ -68,32 +66,11 @@ class ApiService {
     validateResponseStatus(response.statusCode, 200);
 
     var apiResponse = json.decode(response.body);
-    // List<dynamic> data = apiResponse;
 
     Job job = Job.fromJson(apiResponse);
-    // String next = apiResponse['links']['next'];
 
     return JobResponse(job);
   }
-
-  // Toggles the status of a todo.
-  // toggleTodoStatus(int id, String status) async {
-  //   final url = 'https://laravelreact.com/api/v1/todo/$id';
-
-  //   Map<String, String> body = {
-  //     'status': status,
-  //   };
-
-  //   final response = await http.patch(
-  //     url,
-  //     headers: {
-  //       HttpHeaders.authorizationHeader: 'Bearer $token'
-  //     },
-  //     body: body
-  //   );
-
-  //   validateResponseStatus(response.statusCode, 200);
-  // }
 
   ///  Saves a job.
   saveJob(String jid) async {
@@ -128,16 +105,15 @@ class ApiService {
     );
 
     print(response.statusCode);
-    print(response);
+    print(response.body);
     print("done with response!");
 
-    // validateResponseStatus(response.statusCode, 200);
+    validateResponseStatus(response.statusCode, 200);
 
     var apiResponse = json.decode(response.body);
     List<dynamic> data = apiResponse;
 
     List<Job> jobs = jobFromJson(json.encode(data));
-    // String next = apiResponse['links']['next'];
 
     return AllJobResponse(jobs);
   }
@@ -154,10 +130,8 @@ class ApiService {
     validateResponseStatus(response.statusCode, 200);
 
     var apiResponse = json.decode(response.body);
-    // List<dynamic> data = apiResponse;
 
     Job job = Job.fromJson(apiResponse["fields"]);
-    // String next = apiResponse['links']['next'];
 
     return JobResponse(job);
   }

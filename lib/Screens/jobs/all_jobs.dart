@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:jobby/models/job.dart';
-// import 'package:jobby/models/data.dart';
 
 class AllJobs extends StatelessWidget {
   final List<Job> allJobs;
@@ -103,47 +102,31 @@ class AllJobs extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
-          // Row(
-          //   children: [
-          //     Expanded(
-          //       child: Container(
-          //         height: 45,
-          //         decoration: BoxDecoration(
-          //           color: Colors.grey[200],
-          //           borderRadius: BorderRadius.all(
-          //             Radius.circular(10),
-          //           ),
-          //         ),
-          //         child: Center(
-          //           child: Text(
-          //             job.type,
-          //             style: TextStyle(
-          //               fontWeight: FontWeight.bold,
-          //               fontSize: 16,
-          //               color: application.status == "Opened"
-          //                   ? Colors.green[500]
-          //                   : application.status == "Cancelled"
-          //                       ? Colors.red[500]
-          //                       : Colors.black,
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     Expanded(
-          //       child: Container(
-          //         child: Center(
-          //           child: Text(
-          //             r"$" + job. + "/h",
-          //             style: TextStyle(
-          //               fontSize: 24,
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      job.type,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.green[500],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

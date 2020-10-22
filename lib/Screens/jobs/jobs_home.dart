@@ -15,7 +15,6 @@ class JobsHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final allJobs = Provider.of<JobProvider>(context).allJobs;
-    // final allSavedJobs = Provider.of<JobProvider>(context).allSavedJobs;
     return Scaffold(
       backgroundColor: kSilver,
       appBar: AppBar(
@@ -174,34 +173,38 @@ class JobsHome extends StatelessWidget {
                 ],
               ),
               Selector<JobProvider, List<Job>>(
-                  selector: (context, jobProvider) {
-                return jobProvider.allJobs;
-              }, builder: (context, allJobsFromProvider, _) {
-                return allJobsFromProvider.isEmpty
-                    ? Center(child: CircularProgressIndicator())
-                    : ListView.builder(
-                        itemCount: allJobsFromProvider.length.clamp(0.0, 10.0),
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        physics: ScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          var recent = allJobs[index];
-                          return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JobDetail(
-                                    company: recent,
+                selector: (context, jobProvider) {
+                  return jobProvider.allJobs;
+                },
+                builder: (context, allJobsFromProvider, _) {
+                  return allJobsFromProvider.isEmpty &
+                          (Provider.of<JobProvider>(context).fetchstatus ==
+                              Fetch.Busy)
+                      ? Center(child: CircularProgressIndicator())
+                      : ListView.builder(
+                          itemCount: allJobsFromProvider.length.clamp(0, 10),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            var recent = allJobs[index];
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => JobDetail(
+                                      company: recent,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            child: RecentJobCard(company: recent),
-                          );
-                        },
-                      );
-              }),
+                                );
+                              },
+                              child: RecentJobCard(company: recent),
+                            );
+                          },
+                        );
+                },
+              ),
             ],
           ),
         ),

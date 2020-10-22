@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:jobby/models/data.dart';
+import 'package:jobby/Screens/jobs/jobs_detail.dart';
+import 'package:jobby/models/job.dart';
+import 'package:jobby/providers/jobs.dart';
+import 'package:provider/provider.dart';
 
-class Applications extends StatefulWidget {
-  @override
-  _ApplicationsState createState() => _ApplicationsState();
-}
-
-class _ApplicationsState extends State<Applications> {
-  List<Application> applications = getApplications();
-
+class Applications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final allSavedJobs = Provider.of<JobProvider>(context).allSavedJobs;
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -19,15 +16,46 @@ class _ApplicationsState extends State<Applications> {
           Padding(
             padding: EdgeInsets.only(right: 32, left: 32, top: 48, bottom: 32),
             child: Text(
-              "Saved \njobs (" + applications.length.toString() + ")",
+              "Saved \njobs (" + allSavedJobs.length.toString() + ")",
               style: TextStyle(
                   fontSize: 32, fontWeight: FontWeight.bold, height: 1.2),
             ),
           ),
           Padding(
             padding: EdgeInsets.only(right: 32, left: 32, bottom: 8),
-            child: Column(
-              children: buildApplications(),
+            child: Selector<JobProvider, List<Job>>(
+              selector: (context, jobProvider) {
+                return jobProvider.allSavedJobs;
+              },
+              builder: (context, allJobsFromProvider, _) {
+                return (Provider.of<JobProvider>(context).fetchstatus ==
+                        Fetch.Busy)
+                    ? Center(child: CircularProgressIndicator())
+                    : (allJobsFromProvider.isEmpty)
+                        ? Container()
+                        : ListView.builder(
+                            reverse: true,
+                            itemCount: allSavedJobs.length,
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            physics: BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              var company = allSavedJobs[index];
+                              return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => JobDetail(
+                                          company: company,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: buildApplication(company));
+                            },
+                          );
+              },
             ),
           ),
         ],
@@ -35,15 +63,7 @@ class _ApplicationsState extends State<Applications> {
     );
   }
 
-  List<Widget> buildApplications() {
-    List<Widget> list = [];
-    for (var i = 0; i < applications.length; i++) {
-      list.add(buildApplication(applications[i]));
-    }
-    return list;
-  }
-
-  Widget buildApplication(Application application) {
+  Widget buildApplication(Job application) {
     return Container(
       padding: EdgeInsets.all(24),
       margin: EdgeInsets.symmetric(vertical: 4),
@@ -77,14 +97,14 @@ class _ApplicationsState extends State<Applications> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      application.position,
+                      application.title,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      application.company,
+                      application.companyName,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -101,47 +121,6 @@ class _ApplicationsState extends State<Applications> {
           ),
           SizedBox(
             height: 16,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      application.status,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: application.status == "Opened"
-                            ? Colors.green[500]
-                            : application.status == "Cancelled"
-                                ? Colors.red[500]
-                                : Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  child: Center(
-                    child: Text(
-                      r"$" + application.price + "/h",
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
           ),
         ],
       ),
