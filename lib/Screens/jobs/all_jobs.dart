@@ -12,7 +12,7 @@ class AllJobs extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -20,7 +20,7 @@ class AllJobs extends StatelessWidget {
               padding:
                   EdgeInsets.only(right: 32, left: 32, top: 48, bottom: 32),
               child: Text(
-                "All \njobs (" + allJobs.length.toString() + ")",
+                "All jobs (" + allJobs.length.toString() + ")",
                 style: TextStyle(
                     fontSize: 32, fontWeight: FontWeight.bold, height: 1.2),
               ),

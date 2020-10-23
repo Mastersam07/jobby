@@ -151,23 +151,23 @@ class JobsHome extends StatelessWidget {
                     "Recent Jobs",
                     style: kTitleStyle,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 18.0),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AllJobs(
-                              allJobs: allJobs,
-                            ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AllJobs(
+                            allJobs: allJobs,
                           ),
-                        );
-                      },
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 18.0),
                       child: Text(
-                        "Show All",
-                        style: kTitleStyle,
-                      ),
+                          "Show All",
+                          style: kTitleStyle,
+                        ),
                     ),
                   ),
                 ],

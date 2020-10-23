@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobby/models/job.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../constants.dart';
 import 'company_tab.dart';
 import 'description_tab.dart';
@@ -7,6 +8,15 @@ import 'description_tab.dart';
 class JobDetail extends StatelessWidget {
   final Job company;
   JobDetail({this.company});
+
+  _launchURL() async {
+    var url = "${company.website}";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +167,7 @@ class JobDetail extends StatelessWidget {
                   child: RaisedButton(
                     onPressed: () {
                       print(company.website);
+                      _launchURL();
                     },
                     color: kBlack,
                     shape: RoundedRectangleBorder(

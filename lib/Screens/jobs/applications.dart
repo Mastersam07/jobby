@@ -29,8 +29,9 @@ class Applications extends StatelessWidget {
               },
               builder: (context, allJobsFromProvider, _) {
                 return (Provider.of<JobProvider>(context).fetchstatus ==
-                        Fetch.Busy)
-                    ? Center(child: CircularProgressIndicator())
+                        Fetch.Busy || Provider.of<JobProvider>(context).fetchstatus ==
+                        Fetch.Uninitialized)
+                    ? Center(child: CircularProgressIndicator(),)
                     : (allJobsFromProvider.isEmpty)
                         ? Container()
                         : ListView.builder(

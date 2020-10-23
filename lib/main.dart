@@ -55,7 +55,8 @@ class Router extends StatelessWidget {
 
     return Consumer<AuthProvider>(
       builder: (context, user, child) {
-        print(user.status);
+        // print(user.token);
+        // print(user.status);
         switch (user.status) {
           case Status.Uninitialized:
             return SigninScreen();

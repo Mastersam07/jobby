@@ -19,7 +19,9 @@ class AuthProvider with ChangeNotifier {
   final String api = 'http://devjobhub.herokuapp.com/api/v1';
 
   initAuthProvider() async {
+    print("initializing auth");
     String token = await getToken();
+    print(token);
     if (token != null) {
       _token = token;
       _status = Status.Authenticated;
